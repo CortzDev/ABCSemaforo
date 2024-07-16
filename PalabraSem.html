@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palabras a Semaforo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            max-width: 1000px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .letter-image {
+            width: 67px;
+            height: 81px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        #images-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #094f3e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #062c22;
+        }
+        .credits {
+            font-size: 14px;
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+        }
+        .credits a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .credits a:hover {
+            text-decoration: underline;
+        }
+        .header {
+            font-family: 'Times New Roman', Times, serif; /* Cambio de fuente */
+            font-size: 50px;
+            font-weight: bold; /* Aplicar negrita */
+            margin-bottom: 20px;
+            text-align: center;
+            color: #094f3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Palabras a Semaforo
+    </div>
+
+    <div id="game-container">
+        <input type="text" id="word-input" placeholder="Ingresa una palabra...">
+        <button id="generate-button">Generar</button>
+        <div id="images-container"></div>
+    </div>
+
+    <div>
+        <button class="menu-button" onclick="window.location.href='index.html'">Inicio</button>
+    </div>
+
+    <script>
+        // Lista de letras correctas y sus nombres de archivo en la carpeta IMG
+        const letrasCorrectas = {
+            'a': 'a.png',
+            'b': 'b.png',
+            'c': 'c.png',
+            'd': 'd.png',
+            'e': 'e.png',
+            'f': 'f.png',
+            'g': 'g.png',
+            'h': 'h.png',
+            'i': 'i.png',
+            'j': 'j.png',
+            'k': 'k.png',
+            'l': 'l.png',
+            'm': 'm.png',
+            'n': 'n.png',
+            'o': 'o.png',
+            'p': 'p.png',
+            'q': 'q.png',
+            'r': 'r.png',
+            's': 's.png',
+            't': 't.png',
+            'u': 'u.png',
+            'v': 'v.png',
+            'w': 'w.png',
+            'x': 'x.png',
+            'y': 'y.png',
+            'z': 'z.png'
+        };
+
+        const wordInput = document.getElementById('word-input');
+        const generateButton = document.getElementById('generate-button');
+        const imagesContainer = document.getElementById('images-container');
+
+        // Función para generar las imágenes de la palabra ingresada
+        function generarImagenes() {
+            const palabra = wordInput.value.toLowerCase();
+            imagesContainer.innerHTML = ''; // Limpiar imágenes anteriores
+            for (let letra of palabra) {
+                if (letrasCorrectas[letra]) {
+                    const img = document.createElement('img');
+                    img.src = `IMG/${letrasCorrectas[letra]}`;
+                    img.alt = letra;
+                    img.classList.add('letter-image');
+                    imagesContainer.appendChild(img);
+                }
+            }
+        }
+
+        // Evento al presionar el botón de generar
+        generateButton.addEventListener('click', generarImagenes);
+    </script>
+
+    <!-- Créditos -->
+    <div class="credits">
+        <p>Creado por <strong>Javier Antonio Galindo</strong></p>
+        <p>CortzDev - <a href="https://github.com/CortzDev" target="_blank">GitHub</a></p>
+    </div>
+</body>
+</html>

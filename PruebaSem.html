@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abecedario Semáforo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            max-width: 600px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        img {
+            width: 67px;
+            height: 81px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        input[type="text"] {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #094f3e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #062c22;
+        }
+        .message {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .credits {
+            font-size: 14px;
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+        }
+        .credits a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .credits a:hover {
+            text-decoration: underline;
+        }
+        .header {
+            font-family: 'Times New Roman', Times, serif; /* Cambio de fuente */
+            font-size: 50px;
+            font-weight: bold; /* Aplicar negrita */
+            margin-bottom: 20px;
+            text-align: center;
+            color: #094f3e;
+        }
+        
+    </style>
+
+    <!-- Etiqueta para cargar los archivos de sonido -->
+    <audio id="audio-correct" src="SOUND/Correct.mp3"></audio>
+    <audio id="audio-error" src="SOUND/Error.mp3"></audio>
+</head>
+<body>
+    <div class="header">
+        Abecedario Semáforo
+    </div>
+
+    <div id="game-container">
+        <img id="letter-image" alt="Letter">
+        <input type="text" id="word-input" placeholder="Ingresa la letra...">
+        <button id="check-button">Verificar</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <div>
+        <button class="menu-button" onclick="window.location.href='index.html'">Inicio</button>
+    </div>
+
+    <script>
+        // Lista de letras correctas y sus nombres de archivo en la carpeta IMG
+        const letrasCorrectas = [
+            { letra: 'a', filename: 'a.png' },
+            { letra: 'b', filename: 'b.png' },
+            { letra: 'c', filename: 'c.png' },
+            { letra: 'd', filename: 'd.png' },
+            { letra: 'e', filename: 'e.png' },
+            { letra: 'f', filename: 'f.png' },
+            { letra: 'g', filename: 'g.png' },
+            { letra: 'h', filename: 'h.png' },
+            { letra: 'i', filename: 'i.png' },
+            { letra: 'j', filename: 'j.png' },
+            { letra: 'k', filename: 'k.png' },
+            { letra: 'l', filename: 'l.png' },
+            { letra: 'm', filename: 'm.png' },
+            { letra: 'n', filename: 'n.png' },
+            { letra: 'o', filename: 'o.png' },
+            { letra: 'p', filename: 'p.png' },
+            { letra: 'q', filename: 'q.png' },
+            { letra: 'r', filename: 'r.png' },
+            { letra: 's', filename: 's.png' },
+            { letra: 't', filename: 't.png' },
+            { letra: 'u', filename: 'u.png' },
+            { letra: 'v', filename: 'v.png' },
+            { letra: 'w', filename: 'w.png' },
+            { letra: 'x', filename: 'x.png' },
+            { letra: 'y', filename: 'y.png' },
+            { letra: 'z', filename: 'z.png' }
+        ];
+
+        let letraActual = '';
+        let filenameActual = '';
+        const imageContainer = document.getElementById('letter-image');
+        const wordInput = document.getElementById('word-input');
+        const checkButton = document.getElementById('check-button');
+        const messageDisplay = document.getElementById('message');
+        const audioCorrect = document.getElementById('audio-correct');
+        const audioError = document.getElementById('audio-error');
+
+        // Función para generar una nueva letra y cargar su imagen
+        function nuevaPalabra() {
+            const randomIndex = Math.floor(Math.random() * letrasCorrectas.length);
+            letraActual = letrasCorrectas[randomIndex].letra;
+            filenameActual = letrasCorrectas[randomIndex].filename;
+            const urlActual = `IMG/${filenameActual}`;
+            imageContainer.src = urlActual;
+            wordInput.value = '';
+            messageDisplay.innerHTML = '';
+            messageDisplay.classList.remove('correct', 'incorrect');
+            document.body.style.backgroundColor = 'white';
+        }
+
+        // Verificar la letra ingresada
+        function verificarPalabra() {
+            const palabraIngresada = wordInput.value.toLowerCase(); // Convertir a minúsculas
+            if (palabraIngresada === letraActual) {
+                messageDisplay.innerHTML = '¡Correcto!';
+                messageDisplay.classList.add('correct');
+                document.body.style.backgroundColor = '#c3e6cb'; // Fondo verde
+                audioCorrect.play(); // Reproducir sonido de correcto
+            } else {
+                messageDisplay.innerHTML = `La letra es: ${letraActual.toUpperCase()}`;
+                messageDisplay.classList.add('incorrect');
+                document.body.style.backgroundColor = '#f8d7da'; // Fondo rojo
+                audioError.play(); // Reproducir sonido de error
+            }
+            // Cambiar la palabra después de 1 segundo
+            setTimeout(nuevaPalabra, 1000);
+        }
+
+        // Evento al presionar el botón de verificar
+        checkButton.addEventListener('click', verificarPalabra);
+
+        // Iniciar con una palabra al cargar la página
+        nuevaPalabra();
+    </script>
+
+    <!-- Créditos -->
+    <div class="credits">
+        <p>Creado por <strong>Javier Antonio Galindo</strong></p>
+        <p>CortzDev - <a href="https://github.com/CortzDev" target="_blank">GitHub</a></p>
+    </div>
+</body>
+</html>
