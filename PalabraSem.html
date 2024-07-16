@@ -63,6 +63,13 @@
         button:hover {
             background-color: #062c22;
         }
+        .logo {
+            width: 350px;
+            height: auto;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
         .credits {
             font-size: 14px;
             margin-top: 20px;
@@ -77,9 +84,9 @@
             text-decoration: underline;
         }
         .header {
-            font-family: 'Times New Roman', Times, serif; /* Cambio de fuente */
+            font-family: 'Times New Roman', Times, serif; 
             font-size: 50px;
-            font-weight: bold; /* Aplicar negrita */
+            font-weight: bold;
             margin-bottom: 20px;
             text-align: center;
             color: #094f3e;
@@ -87,6 +94,8 @@
     </style>
 </head>
 <body>
+    <img src="IMG/Logo.jpeg" alt="Logo" class="logo">
+
     <div class="header">
         Palabras a Semaforo
     </div>
@@ -102,7 +111,6 @@
     </div>
 
     <script>
-        // Lista de letras correctas y sus nombres de archivo en la carpeta IMG
         const letrasCorrectas = {
             'a': 'a.png',
             'b': 'b.png',
@@ -136,10 +144,10 @@
         const generateButton = document.getElementById('generate-button');
         const imagesContainer = document.getElementById('images-container');
 
-        // Función para generar las imágenes de la palabra ingresada
+       
         function generarImagenes() {
             const palabra = wordInput.value.toLowerCase();
-            imagesContainer.innerHTML = ''; // Limpiar imágenes anteriores
+            imagesContainer.innerHTML = ''; 
             for (let letra of palabra) {
                 if (letrasCorrectas[letra]) {
                     const img = document.createElement('img');
@@ -151,11 +159,11 @@
             }
         }
 
-        // Evento al presionar el botón de generar
+        
         generateButton.addEventListener('click', generarImagenes);
     </script>
 
-    <!-- Créditos -->
+  
     <div class="credits">
         <p>Creado por <strong>Javier Antonio Galindo</strong></p>
         <p>CortzDev - <a href="https://github.com/CortzDev" target="_blank">GitHub</a></p>
